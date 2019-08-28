@@ -10,6 +10,9 @@
 
             {% set firstName = '' %}
             {% set lastName = '' %}
+            {% set email = '' %}
+            {% set location = '' %}
+            {% set age = 35 %}
 
             {% if currentPath == '/user/new' %}
                 <h1>Créer un utilisateur des utilisateurs</h1>
@@ -19,20 +22,40 @@
                 {% set url = '/user/' ~ user.id %}
                 {% set firstName = user.firstName %}
                 {% set lastName = user.lastName %}
+                {% set email = user.email %}
+                {% set location = user.location %}
+                {% set age = user.age %}
             {% endif %}
 
             <form action="{{ url }}" method="POST" class="ui form">
                 <div class="field">
                     <label>First Name</label>
-                    <input type="text" name="firstName" placeholder="Prénom" value="{{ firstName }}" required/>
+                    <input type="text" name="firstName" placeholder="Noël" value="{{ firstName }}" required/>
                 </div>
                 <div class="field">
                     <label>Last Name</label>
-                    <input type="text" name="lastName" placeholder="Nom de famille" value="{{ lastName }}" required/>
+                    <input type="text" name="lastName" placeholder="Flantier" value="{{ lastName }}" required/>
+                </div>
+                <div class="field">
+                    <label>Email</label>
+                    <input type="email" name="email" placeholder="n.flantier@caramail.com" value="{{ email }}"
+                           required/>
+                </div>
+                <div class="field">
+                    <label>Ville</label>
+                    <input type="text" name="location" placeholder="Rio" value="{{ location }}" required/>
+                </div>
+                <div class="field">
+                    <label>Âge</label>
+                    <input type="number" min="3" max="150" name="age" placeholder="35" value="{{ age }}" required/>
                 </div>
                 <button class="ui teal button" type="submit">
                     <i class="check icon"></i>
-                    Créer l'utilisateur
+                    {% if currentPath == '/user/new' %}
+                        Créer l'utilisateur
+                    {% else %}
+                        Modifier l'utilisateur
+                    {% endif %}
                 </button>
             </form>
         </div>

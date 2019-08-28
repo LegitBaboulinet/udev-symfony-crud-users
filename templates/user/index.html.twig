@@ -34,14 +34,22 @@
                 <tr>
                     <th>Prénom</th>
                     <th>Nom de famille</th>
+                    <th>Email</th>
+                    <th>Ville</th>
+                    <th>Âge</th>
+                    <th>Date</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>
                 {% for user in users %}
                     <tr>
-                        <td>{{ user.getFirstName() }}</td>
-                        <td>{{ user.getLastName() }}</td>
+                        <td>{{ user.firstName }}</td>
+                        <td>{{ user.firstName }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.location }}</td>
+                        <td>{{ user.age }}</td>
+                        <td>{{ user.date | date('d/m/Y') }}</td>
                         <td>
                             <a class="no-link" href="/user/{{ user.id }}">
                                 <i class="pencil alternate icon"></i>

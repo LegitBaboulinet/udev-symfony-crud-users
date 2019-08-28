@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\AppUser;
-use mysql_xdevapi\Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -51,6 +50,10 @@ class UserController extends AbstractController
             $user = new AppUser();
             $user->setFirstName($request->get('firstName'));
             $user->setLastName($request->get('lastName'));
+            $user->setEmail($request->get('email'));
+            $user->setLocation($request->get('location'));
+            $user->setAge($request->get('age'));
+            $user->setDate(new \DateTime());
 
             // Sauvegarde de l'utilisateur
             $manager->persist($user);
@@ -101,6 +104,9 @@ class UserController extends AbstractController
             }
             $user->setFirstName($request->get('firstName'));
             $user->setLastName($request->get('lastName'));
+            $user->setEmail($request->get('email'));
+            $user->setLocation($request->get('location'));
+            $user->setAge($request->get('age'));
 
             // Sauvegarde de l'utilisateur
             $manager->persist($user);
