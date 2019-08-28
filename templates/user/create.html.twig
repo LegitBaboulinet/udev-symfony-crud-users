@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{# Récupération de l'URL #}
+{% set currentPath = path(app.request.attributes.get('_route'),
+    app.request.attributes.get('_route_params')) %}
+
+{% block body %}
+    <div class="ui container mt-5">
+        <div class="ui piled segment">
+
+            {% set firstName = '' %}
+            {% set lastName = '' %}
+
+            {% if currentPath == '/user/new' %}
+                <h1>Créer un utilisateur des utilisateurs</h1>
+                {% set url = '/user/new' %}
+            {% else %}
+                <h1>Modifier {{ user.firstName }} {{ user.lastName }}</h1>
+                {% set url = '/user/' ~ user.id %}
+                {% set firstName = user.firstName %}
+                {% set lastName = user.lastName %}
+            {% endif %}
+
+            <form action="{{ url }}" method="POST" class="ui form">
+                <div class="field">
+                    <label>First Name</label>
+                    <input type="text" name="firstName" placeholder="Prénom" value="{{ firstName }}" required/>
+                </div>
+                <div class="field">
+                    <label>Last Name</label>
+                    <input type="text" name="lastName" placeholder="Nom de famille" value="{{ lastName }}" required/>
+                </div>
+                <button class="ui teal button" type="submit">
+                    <i class="check icon"></i>
+                    Créer l'utilisateur
+                </button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

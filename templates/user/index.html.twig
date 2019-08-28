@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="ui container mt-5">
+        {% if success == '1' %}
+            <div class="ui positive message">
+                <i class="close icon"></i>
+                <div class="header">
+                    {% if message != null and message != '' %}
+                        {{ message }}
+                    {% else %}
+                        L'action a bien été effectuée
+                    {% endif %}
+                </div>
+            </div>
+        {% elseif success == '0' %}
+            <div class="ui negative message">
+                <i class="close icon"></i>
+                <div class="header">
+                    {% if message != null and message != '' %}
+                        {{ message }}
+                    {% else %}
+                        Une erreur s'est produite
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
+        <div class="ui piled segment">
+
+            <h1>Liste des utilisateurs</h1>
+
+            <table class="ui celled table">
+                <thead>
+                <tr>
+                    <th>Prénom</th>
+                    <th>Nom de famille</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.getFirstName() }}</td>
+                        <td>{{ user.getLastName() }}</td>
+                        <td>
+                            <a class="no-link" href="/user/{{ user.id }}">
+                                <i class="pencil alternate icon"></i>
+                            </a>
+                            <a class="action-icon" style="color: red;" href="/user/{{ user.id }}/delete">
+                                <i class="trash alternate icon"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            <a href="/user/new">
+                <button class="ui active button">
+                    <i class="plus icon"></i>
+                    Créer un nouvel utilisateur
+                </button>
+            </a>
+        </div>
+    </div>
+{% endblock %}
