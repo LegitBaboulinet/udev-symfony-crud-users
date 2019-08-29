@@ -1,4 +1,4 @@
-# udev--symfony-crud-users
+# udev-symfony-crud-users
 
 ## Procédure d'installation
 
@@ -27,7 +27,7 @@ Mais, il faut changer les fichiers de configuration pour adapter la configuratio
 Pour cela, ouvrez le fichier '.env'. Situé à la racine du projet.
 Changez la ligne 27 :
 ```text
-DATABASE_URL=pgsql://postgres@127.0.0.1:5432/symfony_app
+DATABASE_URL=mysql://symfony_app:symfony_app@127.0.0.1:5432/symfony_app
 ```
 Remplacez la comme cela pour une configuration avec **MySQL** :
 
@@ -38,12 +38,6 @@ DATABASE_URL=mysql://root@127.0.0.1:3306/LE_NOM_DE_VOTRE_BDD
 # Si votre utilisateur a un MDP, alors remplacez la ligne par celle-ci :
 DATABASE_URL=mysql://VOTRE_UTILISATEUR:VOTRE_MDP@127.0.0.1:3306/LE_NOM_DE_VOTRE_BDD
 ```
-
-**ATTENTION**
-
-Il faut également changer le fichier doctrine.yaml situé dans le dossier config/packages.
-Il définit la configuration de la base de données.  
-Remplacez le par le fichier MySQL utilisé dans le projet précédent.
 
 **Migration de la base de données**
 
