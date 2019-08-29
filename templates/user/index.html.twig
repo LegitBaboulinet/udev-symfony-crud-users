@@ -4,7 +4,7 @@
     <div class="ui container mt-5">
         {% if success == '1' %}
             <div class="ui positive message">
-                <i class="close icon"></i>
+                <i class="close icon" onclick="closeMessage(this)"></i>
                 <div class="header">
                     {% if message != null and message != '' %}
                         {{ message }}
@@ -15,7 +15,7 @@
             </div>
         {% elseif success == '0' %}
             <div class="ui negative message">
-                <i class="close icon"></i>
+                <i class="close icon" onclick="closeMessage(this)"></i>
                 <div class="header">
                     {% if message != null and message != '' %}
                         {{ message }}
@@ -54,7 +54,8 @@
                             <a class="no-link" href="/user/{{ user.id }}">
                                 <i class="pencil alternate icon"></i>
                             </a>
-                            <a class="action-icon" style="color: red;" href="/user/{{ user.id }}/delete">
+                            <a class="action-icon" style="color: red; cursor: pointer;"
+                               onclick="validateUserDeletion({{ user.id }})">
                                 <i class="trash alternate icon"></i>
                             </a>
                         </td>
@@ -69,6 +70,27 @@
                     Créer un nouvel utilisateur
                 </button>
             </a>
+        </div>
+    </div>
+
+    <!-- Modal de validation de la suppression -->
+    <div class="ui modal">
+        <i class="close icon"></i>
+        <div class="header">
+            Supprimer l'utilisateur ?
+        </div>
+        <div class="content">
+            <p>Voulez-vous réélement supprimer cette utilisateur ?</p>
+        </div>
+        <div class="actions">
+            <div class="ui red deny right labeled icon button">
+                NON, SURTOUT PAS !
+                <i class="cancel icon"></i>
+            </div>
+            <div class="ui positive teal right labeled icon button" onclick="deleteUser()">
+                Oui
+                <i class="checkmark icon"></i>
+            </div>
         </div>
     </div>
 {% endblock %}

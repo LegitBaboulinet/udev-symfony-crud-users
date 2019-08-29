@@ -1,3 +1,5 @@
+{# Thème créé par TorbenKoehn (https://gist.github.com/TorbenKoehn/4c0180c87393bd44315da523f7971b33) #}
+
 {% use 'form_div_layout.html.twig' %}
 
 {% block form_start -%}
@@ -17,7 +19,7 @@
 {%- endblock textarea_widget %}
 
 {% block button_widget -%}
-    {% set attr = attr|merge({class: (attr.class|default('') ~ ' ui teal button')|trim}) %}
+    {% set attr = attr|merge({class: (attr.class|default('') ~ ' ui green button')|trim}) %}
     {{- parent() -}}
 {%- endblock %}
 

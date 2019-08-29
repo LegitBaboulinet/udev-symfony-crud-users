@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\AppUser;
+use mysql_xdevapi\Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -84,10 +85,10 @@ class UserController extends AbstractController
                 // Sauvegarde de l'utilisateur
                 $em->persist($user);
                 $em->flush();
-                $success = true;
+                $success = 1;
                 $message = 'L\'utilisateur ' . $user->getFirstName() . ' ' . $user->getLastName() . ' a bien été créé';
             } catch (Exception $e) {
-                $success = false;
+                $success = 0;
                 $message = 'Une erreur est survenue lors de la création de l\'utilisateur';
             }
 
@@ -106,35 +107,46 @@ class UserController extends AbstractController
      */
     public function update(int $id, Request $request)
     {
-        // Récupération de la connexion à la base de données
-        $repository = $this->getDoctrine()->getRepository(AppUser::class);
+        try {
+            // Récupération de la connexion à la base de données
+            $repository = $this->getDoctrine()->getRepository(AppUser::class);
 
-        // Récupération de l'utilisateur avec son id
-        $user = $repository->find($id);
+            // Récupération de l'utilisateur avec son id
+            $user = $repository->find($id);
+            if ($user == null) {
+                throw new \Exception('L\'utilisateur n\'existe pas', 404);
+            }
 
-        // Création du formulaire
-        $form = $this->getForm($user, 'Modifier l\'utilisateur');
+            // Création du formulaire
+            $form = $this->getForm($user, 'Modifier l\'utilisateur');
 
-        $form->handleRequest($request);
+            $form->handleRequest($request);
 
-        // Vérification des données
-        if ($form->isSubmitted() && $form->isValid()) {
+            // Vérification des données
+            if ($form->isSubmitted() && $form->isValid()) {
 
-            $manager = $this->getDoctrine()->getManager();
+                $manager = $this->getDoctrine()->getManager();
 
-            // Sauvegarde de l'utilisateur
-            $manager->persist($user);
-            $manager->flush();
+                // Sauvegarde de l'utilisateur
+                $manager->persist($user);
+                $manager->flush();
 
-            // Redirection de l'utilisateur vers la page d'accueil
-            return $this->redirect($this->generateUrl('users'));
+                // Redirection de l'utilisateur vers la page d'accueil
+                return $this->redirect($this->generateUrl('users'));
+            }
+
+            // Affichage de la page de création
+            return $this->render('user/create.html.twig', [
+                'form' => $form->createView(),
+                'user' => $user
+            ]);
+        } catch (\Exception $e) {
+            if ($e->getCode() == 404) {
+                return $this->render('404.html.twig');
+            } else {
+                return $this->render('500.html.twig');
+            }
         }
-
-        // Affichage de la page de création
-        return $this->render('user/create.html.twig', [
-            'form' => $form->createView(),
-            'user' => $user
-        ]);
     }
 
     /**
@@ -142,6 +154,7 @@ class UserController extends AbstractController
      */
     public function delete(int $id, Request $request)
     {
+        $success = 0;
         try {
             // Récupération de la connexion à la base de données
             $manager = $this->getDoctrine()->getManager();
@@ -150,19 +163,21 @@ class UserController extends AbstractController
             // Récupération de l'utilisateur
             $user = $repository->find($id);
             if ($user == null) {
-                throw new Exception();
+                throw new \Exception();
             }
 
             // Suppression de l'utilisateur
             $manager->remove($user);
             $manager->flush();
 
-            $success = true;
-        } catch (Exception $e) {
-            $success = false;
+            $success = 1;
+            $message = 'L\'utilisateur a bien été supprimé';
+        } catch (\Exception $e) {
+            $success = 0;
+            $message = 'Un erreur est survenue lors de la suppression de l\'utilisateur';
         }
 
         // Redirection vers la page d'accueil
-        return $this->redirect('/users?success=' . $success . '&message=L\'utilisateur a bien été supprimé');
+        return $this->redirect('/users?success=' . $success . '&message=' . $message);
     }
 }

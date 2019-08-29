@@ -22,7 +22,7 @@ Cette commande va installer les dépendances requises pour le bon fonctionnement
 **Configuration de la base de données**
 
 La BDD (base de données pour ceux qui ne savent pas ce que ça veut dire) utilisée pour le projet est configurée pour MySQL.
-Mais, il faut changer le fichier de configuration pour adapter la configuration de la connexion.
+Mais, il faut changer les fichiers de configuration pour adapter la configuration de la connexion.
 
 Pour cela, ouvrez le fichier '.env'. Situé à la racine du projet.
 Changez la ligne 27 :
@@ -38,6 +38,12 @@ DATABASE_URL=mysql://root@127.0.0.1:3306/LE_NOM_DE_VOTRE_BDD
 # Si votre utilisateur a un MDP, alors remplacez la ligne par celle-ci :
 DATABASE_URL=mysql://VOTRE_UTILISATEUR:VOTRE_MDP@127.0.0.1:3306/LE_NOM_DE_VOTRE_BDD
 ```
+
+**ATTENTION**
+
+Il faut également changer le fichier doctrine.yaml situé dans le dossier config/packages.
+Il définit la configuration de la base de données.  
+Remplacez le par le fichier MySQL utilisé dans le projet précédent.
 
 **Migration de la base de données**
 
