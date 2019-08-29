@@ -4,6 +4,15 @@
 {% set currentPath = path(app.request.attributes.get('_route'),
     app.request.attributes.get('_route_params')) %}
 
+{# Défintion du titre de la page #}
+{% block title %}
+    {% if currentPath== '/user/new' %}
+        Créer un nouvel utilisateur
+    {% else %}
+        Modifier {{ user.firstName }} {{ user.lastName }}
+    {% endif %}
+{% endblock %}
+
 {% block body %}
     <div class="ui container mt-5">
         <div class="ui piled segment">
@@ -17,7 +26,7 @@
 
             <!-- Identification du type de l'action (création ou modification) -->
             {% if currentPath == '/user/new' %}
-                <h1>Créer un utilisateur des utilisateurs</h1>
+                <h1>Créer un utilisateur</h1>
                 {% set url = '/user/new' %}
             {% else %}
                 <h1>Modifier {{ user.firstName }} {{ user.lastName }}</h1>
